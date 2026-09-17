@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 import torch
+from torch.utils.data import TensorDataset, DataLoader
 
 celsius, fahrenheit = [], []
 with open('temperature_measurements.csv') as f:
@@ -17,3 +18,6 @@ celsius_std = X_train.std()
 
 X_train_norm = torch.tensor((X_train - celsius_mean) / celsius_std, dtype=torch.float32)
 y_train = torch.tensor(y_train, dtype=torch.float32)
+
+train_ds = TensorDataset(X_train_norm, y_train)
+train_dl = DataLoader(train_ds, batch_size=1)
